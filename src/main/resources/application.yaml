@@ -1,2 +1,10 @@
 server:
   port: 4000
+
+spring:
+  application:
+    name: Backend Assignment
+
+firebase:
+  web-key: ${FIREBASE_WEB_KEY}
+  private-key-src: ${FIREBASE_PRIVATE_KEY}
