@@ -1,0 +1,57 @@
+### Should return 400 Invalid body format
+POST localhost:4000/api/v1/users/create
+Content-Type: application/json
+
+{
+  "email": "user@email",
+  "password": "12345"
+}
+
+### Should return 409 Conflict Email already exists
+POST localhost:4000/api/v1/users/create
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "password": "123456"
+}
+
+### Should create the user returning 201 Created :)
+POST localhost:4000/api/v1/users/create
+Content-Type: application/json
+
+{
+  "email": "user1@email.com",
+  "password": "123456"
+}
+
+### ==============
+### Login endpoint
+### ==============
+
+### Should return 400 Invalid body format
+POST localhost:4000/api/v1/users/login
+Content-Type: application/json
+
+{
+  "email": "user",
+  "password": "12345"
+}
+
+### Should return 401 Unauthorized
+POST localhost:4000/api/v1/users/login
+Content-Type: application/json
+
+{
+  "email": "kjsfdjs@email.com",
+  "password": "123456"
+}
+
+### Should login the user returning the Id Token
+POST localhost:4000/api/v1/users/login
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "password": "123456"
+}

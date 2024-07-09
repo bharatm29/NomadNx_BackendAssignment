@@ -15,9 +15,4 @@ public class BackendAssignmentApplication {
     public static void main(String[] args) {
         SpringApplication.run(BackendAssignmentApplication.class, args);
     }
-
-    @Bean
-    public FirebaseAuth firebaseAuth() {
-        return FirebaseAuth.getInstance();
-    }
 }

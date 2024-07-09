@@ -10,4 +10,5 @@ import org.springframework.context.annotation.Configuration;
 public class FirebaseConfigProperties {
     private String privateKeySrc;
     private String webKey;
+    private String webUrl;
 }

@@ -8,3 +8,4 @@ spring:
 firebase:
   web-key: ${FIREBASE_WEB_KEY}
   private-key-src: ${FIREBASE_PRIVATE_KEY}
+  web-url: https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword
