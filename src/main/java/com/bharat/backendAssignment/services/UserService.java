@@ -42,9 +42,6 @@ public class UserService {
                 .returnSecureToken(Boolean.TRUE)
                 .build();
 
-        System.out.println(requestBody);
-        System.out.println(firebaseConfigProperties.getWebKey());
-
         final FirebaseResponseToken response;
 
         try {
