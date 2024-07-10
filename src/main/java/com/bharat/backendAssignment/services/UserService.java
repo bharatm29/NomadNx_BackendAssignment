@@ -43,7 +43,6 @@ public class UserService {
                 .build();
 
         final FirebaseResponseToken response;
-
         try {
             response = RestClient
                     .create(firebaseConfigProperties.getWebUrl())

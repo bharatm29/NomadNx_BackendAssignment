@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @Log4j2
 @ControllerAdvice
 @RequiredArgsConstructor
-public class CustomExceptionHandler {
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(TokenVerificationException.class)
     public ResponseEntity<ExceptionDto> handleTokenVerificationException(TokenVerificationException ex, WebRequest request) {
         log.error("Exception: {}", ex.getMessage(), ex);
@@ -33,7 +34,7 @@ public class CustomExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
                 ExceptionDto.builder()
-                        .description(ex.getMessage())
+                        .description("Some error occurred: " + ex.getMessage())
                         .status(HttpStatus.NOT_IMPLEMENTED.toString())
                         .build()
         );
