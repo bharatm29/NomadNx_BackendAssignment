@@ -1,6 +1,5 @@
 package com.bharat.backendAssignment.exceptions;
 
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 

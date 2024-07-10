@@ -19,10 +19,22 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ExceptionDto> handleTokenVerificationException(TokenVerificationException ex, WebRequest request) {
         log.error("Exception: {}", ex.getMessage(), ex);
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+        return ResponseEntity.status(ex.getStatusCode()).body(
                 ExceptionDto.builder()
-                        .description(ex.getMessage())
-                        .status(HttpStatus.UNAUTHORIZED.toString())
+                        .description(ex.getReason())
+                        .status(ex.getStatusCode().toString())
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    public ResponseEntity<ExceptionDto> handleEmailNotVerifiedException(EmailNotVerifiedException ex, WebRequest request) {
+        log.error("Exception: {}", ex.getMessage(), ex);
+
+        return ResponseEntity.status(ex.getStatusCode()).body(
+                ExceptionDto.builder()
+                        .description(ex.getReason())
+                        .status(ex.getStatusCode().toString())
                         .build()
         );
     }

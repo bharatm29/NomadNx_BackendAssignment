@@ -1,5 +1,6 @@
 package com.bharat.backendAssignment.filters;
 
+import com.bharat.backendAssignment.exceptions.EmailNotVerifiedException;
 import com.bharat.backendAssignment.exceptions.TokenVerificationException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -44,6 +45,11 @@ public class FirebaseTokenAuthFilter extends OncePerRequestFilter {
                 firebaseToken = FirebaseAuth.getInstance().verifyIdToken(jwtToken);
 
                 final var userId = Optional.ofNullable(firebaseToken.getClaims().get("user_id")).orElseThrow(IllegalStateException::new);
+                final var user = FirebaseAuth.getInstance().getUser((String) userId);
+
+                if (!user.isEmailVerified()) {
+                    throw new EmailNotVerifiedException();
+                }
 
                 final var authentication = new UsernamePasswordAuthenticationToken(userId, null, null);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -51,9 +57,13 @@ public class FirebaseTokenAuthFilter extends OncePerRequestFilter {
             } catch (FirebaseAuthException e) {
                 handlerExceptionResolver.resolveException(request, response, null, new TokenVerificationException());
                 return;
+            } catch (EmailNotVerifiedException e) {
+                handlerExceptionResolver.resolveException(request, response, null, e);
+                return;
             } catch (
                     Exception e) { // TODO: Remove this extra catch and configure a custom AuthenticationEntryPoint to catch all exceptions thrown in filters
                 handlerExceptionResolver.resolveException(request, response, null, new TokenVerificationException());
+                return;
             }
         }
 
