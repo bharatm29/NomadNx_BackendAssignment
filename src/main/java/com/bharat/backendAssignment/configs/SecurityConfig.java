@@ -26,7 +26,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(HttpMethod.POST, "/api/v1/users/**").permitAll();
-                    registry.anyRequest().permitAll();
+                    registry.requestMatchers(HttpMethod.GET, "/swagger-ui**/**").permitAll();
+                    registry.requestMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll();
+                    registry.anyRequest().authenticated();
                 })
                 .addFilterBefore(firebaseTokenAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -36,7 +36,7 @@ public class FirebaseTokenAuthFilter extends OncePerRequestFilter {
 
         final String authorizationHeader = request.getHeader("Authorization");
 
-        if (!authorizationHeader.isBlank() && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && !authorizationHeader.isBlank() && authorizationHeader.startsWith("Bearer ")) {
             final String jwtToken = authorizationHeader.substring(7);
 
             final FirebaseToken firebaseToken;
