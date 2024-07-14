@@ -39,6 +39,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ExceptionDto> handleInvalidCredentialsException(InvalidCredentialsException ex, WebRequest request) {
+        log.error("Exception: {}", ex.getMessage(), ex);
+
+        return ResponseEntity.status(ex.getStatusCode()).body(
+                ExceptionDto.builder()
+                        .description(ex.getReason())
+                        .status(ex.getStatusCode().toString())
+                        .build()
+        );
+    }
+
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionDto> handleAllExceptions(Exception ex, WebRequest request) {
